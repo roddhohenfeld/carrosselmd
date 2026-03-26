@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarrosselMD â Dr. Rodrigo Hohenfeld</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --bg2: #0f0f0f;
+  --bg3: #161616;
+  --border: #222;
+  --border2: #2a2a2a;
+  --text: #f0f0f0;
+  --text2: #888;
+  --text3: #444;
+  --green: #c8ff00;
+  --teal: #3fffc8;
+  --purple: #a78bfa;
+  --blue: #60a5fa;
+  --red: #f87171;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* HEADER */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: #080808ee;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 10px var(--green)} 50%{opacity:0.6;box-shadow:0 0 4px var(--green)} }
+.logo-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
+.logo-handle { font-size: 11px; color: var(--text3); letter-spacing: 1px; }
+.header-badge {
+  font-size: 10px; color: var(--text3);
+  font-family: 'Syne', sans-serif; letter-spacing: 2px; text-transform: uppercase;
+}
+
+/* MAIN LAYOUT */
+.container { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+/* FORM CARD */
+.form-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 36px;
+  position: relative;
+  overflow: hidden;
+}
+.form-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--green)44, transparent);
+}
+
+.field-label {
+  display: block;
+  font-size: 10px; font-weight: 600;
+  color: var(--text3);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-family: 'Syne', sans-serif;
+}
+
+textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 16px 18px;
+  color: var(--text);
+  font-size: 15px;
+  resize: none;
+  outline: none;
+  line-height: 1.6;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s;
+}
+textarea:focus { border-color: #333; }
+textarea::placeholder { color: var(--text3); }
+
+.config-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 28px; }
+
+/* OPTION BUTTONS */
+.opt-btn {
+  width: 100%; text-align: left;
+  padding: 10px 13px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  font-size: 12px;
+  cursor: pointer;
+  margin-bottom: 6px;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.15s;
+  display: flex; align-items: center; gap: 8px;
+}
+.opt-btn:hover { border-color: var(--border2); color: var(--text); }
+.opt-btn.active-green { background: #c8ff0010; border-color: var(--green); color: var(--green); }
+
+.tone-btn {
+  width: 100%; text-align: left;
+  padding: 11px 13px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  margin-bottom: 6px;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.15s;
+}
+.tone-btn:hover { border-color: var(--border2); }
+.tone-btn.active-teal { background: #3fffc810; border-color: var(--teal); }
+.tone-btn .tt { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+.tone-btn .td { font-size: 10px; color: var(--text3); }
+.tone-btn.active-teal .tt { color: var(--teal); }
+
+.slide-row { display: flex; gap: 8px; margin-bottom: 18px; }
+.sc-btn {
+  flex: 1; padding: 10px 0;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text2);
+  font-size: 15px; font-weight: 600;
+  cursor: pointer;
+  font-family: 'Syne', sans-serif;
+  transition: all 0.15s;
+}
+.sc-btn:hover { border-color: var(--border2); color: var(--text); }
+.sc-btn.active-purple { background: #a78bfa15; border-color: var(--purple); color: var(--purple); }
+
+/* GENERATE BUTTON */
+.gen-btn {
+  width: 100%;
+  background: var(--green);
+  border: none;
+  color: #000;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 13px; font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Syne', sans-serif;
+  transition: all 0.2s;
+  position: relative; overflow: hidden;
+}
+.gen-btn:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
+.gen-btn:active:not(:disabled) { transform: translateY(0); }
+.gen-btn:disabled { background: var(--bg3); color: var(--text3); cursor: not-allowed; transform: none; }
+.gen-btn .spinner {
+  display: inline-block; width: 14px; height: 14px;
+  border: 2px solid #00000030;
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle; margin-right: 8px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.err { color: var(--red); font-size: 12px; margin-top: 10px; text-align: center; min-height: 18px; }
+
+/* RESULT */
+.result { animation: fadeUp 0.35s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+.result-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.result-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: #fff; line-height: 1.25; }
+.result-sub { font-size: 13px; color: var(--text2); margin-top: 4px; }
+.result-meta {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 8px; padding: 5px 12px;
+  font-size: 11px; color: var(--text3);
+  font-family: 'Syne', sans-serif; white-space: nowrap;
+}
+.visual-hint {
+  margin-top: 12px; padding: 10px 14px;
+  background: #0d0d1a; border: 1px solid #1a1a2e;
+  border-radius: 10px; font-size: 12px; color: #7c6fff;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+
+/* TABS */
+.tabs {
+  display: flex; gap: 3px;
+  background: var(--bg2); padding: 4px;
+  border-radius: 11px; border: 1px solid var(--border);
+  width: fit-content; margin: 20px 0 16px;
+}
+.tab-btn {
+  background: transparent; border: none;
+  color: var(--text3); padding: 7px 18px;
+  border-radius: 8px; font-size: 12px; font-weight: 500;
+  cursor: pointer; letter-spacing: 1px; text-transform: uppercase;
+  font-family: 'Syne', sans-serif; transition: all 0.15s;
+}
+.tab-btn.active { background: var(--bg3); color: #fff; border: 1px solid var(--border); }
+
+/* SLIDES */
+.slides-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.slide-card {
+  border-radius: 14px; padding: 18px;
+  border: 1px solid; position: relative; overflow: hidden;
+  transition: transform 0.15s;
+}
+.slide-card:hover { transform: translateY(-2px); }
+.slide-bar { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+.slide-meta { display: flex; justify-content: space-between; align-items: center; margin: 6px 0 10px; }
+.slide-type-lbl { font-size: 9px; font-weight: 700; letter-spacing: 2px; font-family: 'Syne', sans-serif; }
+.slide-num { font-size: 10px; color: var(--text3); font-family: 'Syne', sans-serif; }
+.slide-title { font-size: 14px; font-weight: 500; color: #f0f0f0; line-height: 1.45; margin-bottom: 7px; }
+.slide-stitle { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+/* TEXT PANELS */
+.text-panel {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 22px;
+}
+.panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.panel-lbl { font-size: 10px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; font-family: 'Syne', sans-serif; }
+.copy-btn {
+  font-size: 11px; color: var(--text2);
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 7px; padding: 5px 13px;
+  cursor: pointer; font-family: 'Syne', sans-serif;
+  letter-spacing: 1px; transition: all 0.2s;
+}
+.copy-btn:hover { border-color: var(--teal); color: var(--teal); }
+.copy-btn.copied { background: #3fffc815; border-color: var(--teal); color: var(--teal); }
+.legenda-text { font-size: 14px; color: #ccc; line-height: 1.85; white-space: pre-wrap; }
+.tags-wrap { display: flex; flex-wrap: wrap; gap: 7px; }
+.tag {
+  font-size: 11px; color: var(--blue);
+  background: #60a5fa15; border: 1px solid #60a5fa33;
+  border-radius: 20px; padding: 5px 12px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* NEW BTN */
+.new-btn {
+  display: block; margin: 24px auto 0;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text3); padding: 10px 28px;
+  border-radius: 10px; font-size: 11px;
+  font-family: 'Syne', sans-serif; letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.15s;
+}
+.new-btn:hover { border-color: var(--border2); color: var(--text2); }
+
+/* IDEAS */
+.ideas-title { font-size: 10px; color: var(--text3); letter-spacing: 2.5px; text-transform: uppercase; font-family: 'Syne', sans-serif; margin-bottom: 14px; }
+.ideas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.idea-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 14px 16px;
+  text-align: left; cursor: pointer; width: 100%;
+  font-family: 'Inter', sans-serif; transition: border-color 0.15s;
+}
+.idea-card:hover { border-color: var(--border2); }
+.idea-text { font-size: 13px; color: #ccc; line-height: 1.45; margin-bottom: 7px; }
+.idea-pub { font-size: 11px; color: var(--text3); }
+
+/* RESPONSIVE */
+@media(max-width: 640px) {
+  header { padding: 0 16px; }
+  .container { padding: 24px 16px 60px; }
+  .form-card { padding: 20px; }
+  .config-grid { grid-template-columns: 1fr; gap: 16px; }
+  .slides-grid { grid-template-columns: 1fr; }
+  .ideas-grid { grid-template-columns: 1fr; }
+  .result-header { flex-direction: column; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    <div>
+      <div class="logo-name">CarrosselMD</div>
+      <div class="logo-handle">@dr.roddhohenfeld</div>
+    </div>
+  </div>
+  <div class="header-badge">Medicina do esporte Ã conteÃºdo</div>
+</header>
+
+<div class="container">
+
+  <!-- FORM -->
+  <div class="form-card">
+    <label class="field-label">Tema do carrossel</label>
+    <textarea id="tema" rows="2" placeholder="Ex: Por que a maioria das dietas falha apÃ³s 3 meses..."></textarea>
+
+    <div class="config-grid">
+      <!-- PÃBLICO -->
+      <div>
+        <label class="field-label" style="margin-top:4px">PÃºblico</label>
+        <button class="opt-btn active-green" data-g="pub" data-v="emagrecimento">â¡ Emagrecimento saudÃ¡vel</button>
+        <button class="opt-btn" data-g="pub" data-v="longevidade">ð¬ Longevidade &amp; saÃºde</button>
+        <button class="opt-btn" data-g="pub" data-v="executivos">ð§  Executivos &amp; performance</button>
+        <button class="opt-btn" data-g="pub" data-v="trt">ð TRT &amp; PeptÃ­deos</button>
+      </div>
+
+      <!-- TOM -->
+      <div>
+        <label class="field-label" style="margin-top:4px">Tom</label>
+        <button class="tone-btn active-teal" data-g="tom" data-v="cientifico">
+          <div class="tt">CientÃ­fico &amp; acessÃ­vel</div><div class="td">Educa com autoridade</div>
+        </button>
+        <button class="tone-btn" data-g="tom" data-v="provocativo">
+          <div class="tt">Provocativo</div><div class="td">Myth-busting, contra o mainstream</div>
+        </button>
+        <button class="tone-btn" data-g="tom" data-v="motivacional">
+          <div class="tt">Motivacional</div><div class="td">Base cientÃ­fica + aÃ§Ã£o</div>
+        </button>
+      </div>
+
+      <!-- SLIDES + GERAR -->
+      <div>
+        <label class="field-label" style="margin-top:4px">NÂº de slides</label>
+        <div class="slide-row">
+          <button class="sc-btn" data-v="5">5</button>
+          <button class="sc-btn active-purple" data-v="7">7</button>
+          <button class="sc-btn" data-v="10">10</button>
+        </div>
+        <button class="gen-btn" id="genBtn" onclick="doGenerate()">â Gerar carrossel</button>
+        <div class="err" id="errMsg"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result" style="display:none"></div>
+
+  <!-- IDEAS -->
+  <div id="ideas">
+    <p class="ideas-title">Ideias de temas</p>
+    <div class="ideas-grid" id="ideasGrid"></div>
+  </div>
+
+</div>
+
+<script>
+const PUB = {
+  emagrecimento: "Pessoas buscando emagrecimento saudÃ¡vel",
+  longevidade: "PÃºblico geral de longevidade e saÃºde",
+  executivos: "Executivos / performance cognitiva e fÃ­sica",
+  trt: "Pessoas buscando TRT e PeptÃ­deos com seguranÃ§a"
+};
+const TOM = {
+  cientifico: "CientÃ­fico e acessÃ­vel",
+  provocativo: "Provocativo / myth-busting",
+  motivacional: "Motivacional com base cientÃ­fica"
+};
+const ICONS = { emagrecimento:"â¡", longevidade:"ð¬", executivos:"ð§ ", trt:"ð" };
+const SLIDE_CFG = {
+  hook:       { bar:"#c8ff00", color:"#a0c800", label:"HOOK" },
+  conteudo:   { bar:"#3fffc8", color:"#00c8a0", label:"CONTEÃDO" },
+  autoridade: { bar:"#a78bfa", color:"#8b5cf6", label:"AUTORIDADE" },
+  cta:        { bar:"#f87171", color:"#ef4444", label:"CTA" }
+};
+const IDEAS = [
+  {tema:"Por que vocÃª nÃ£o perde gordura mesmo treinando todo dia", pub:"emagrecimento"},
+  {tema:"O que ninguÃ©m te conta sobre TRT: riscos reais e mitos", pub:"trt"},
+  {tema:"PeptÃ­deos para recuperaÃ§Ã£o: o que a ciÃªncia diz em 2025", pub:"trt"},
+  {tema:"VO2 mÃ¡ximo: o exame que prevÃª sua longevidade melhor que colesterol", pub:"longevidade"},
+  {tema:"Por que executivos de alto desempenho envelhecem mais rÃ¡pido", pub:"executivos"},
+  {tema:"GLP-1 alÃ©m do emagrecimento: o que a ciÃªncia estÃ¡ descobrindo", pub:"emagrecimento"},
+];
+
+let sPub="emagrecimento", sTom="cientifico", sSlides=7;
+
+// Init ideas
+(function(){
+  const g = document.getElementById("ideasGrid");
+  IDEAS.forEach(idea => {
+    const b = document.createElement("button");
+    b.className = "idea-card";
+    b.innerHTML = `<div class="idea-text">${idea.tema}</div><div class="idea-pub">${ICONS[idea.pub]} ${PUB[idea.pub]}</div>`;
+    b.onclick = () => { document.getElementById("tema").value = idea.tema; selectOpt("pub", idea.pub); };
+    g.appendChild(b);
+  });
+})();
+
+// Option selection
+document.querySelectorAll("[data-g='pub']").forEach(b => b.addEventListener("click", () => selectOpt("pub", b.dataset.v)));
+document.querySelectorAll("[data-g='tom']").forEach(b => b.addEventListener("click", () => selectOpt("tom", b.dataset.v)));
+document.querySelectorAll(".sc-btn").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".sc-btn").forEach(x => x.classList.remove("active-purple"));
+  b.classList.add("active-purple");
+  sSlides = parseInt(b.dataset.v);
+}));
+
+function selectOpt(g, v) {
+  if (g === "pub") {
+    sPub = v;
+    document.querySelectorAll("[data-g='pub']").forEach(b => b.classList.remove("active-green"));
+    document.querySelector(`[data-g='pub'][data-v='${v}']`)?.classList.add("active-green");
+  } else {
+    sTom = v;
+    document.querySelectorAll("[data-g='tom']").forEach(b => b.classList.remove("active-teal"));
+    document.querySelector(`[data-g='tom'][data-v='${v}']`)?.classList.add("active-teal");
+  }
+}
+
+async function doGenerate() {
+  const tema = document.getElementById("tema").value.trim();
+  if (!tema) return;
+  const btn = document.getElementById("genBtn");
+  const err = document.getElementById("errMsg");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Gerando...';
+  err.textContent = "";
+  document.getElementById("result").style.display = "none";
+  document.getElementById("ideas").style.display = "none";
+
+  try {
+    const res = await fetch("/api/gerar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tema, publico: PUB[sPub], tom: TOM[sTom], slides: sSlides })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    renderResult(data);
+  } catch(e) {
+    err.textContent = "Erro ao gerar. Tente novamente.";
+    document.getElementById("ideas").style.display = "block";
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = "â Gerar carrossel";
+  }
+}
+
+function renderResult(d) {
+  const el = document.getElementById("result");
+  el.className = "result";
+  el.style.display = "block";
+
+  const slidesHTML = (d.slides||[]).map((s,i) => {
+    const cfg = SLIDE_CFG[s.tipo] || SLIDE_CFG.conteudo;
+    return `<div class="slide-card" style="background:#0e0e0e;border-color:${cfg.bar}22">
+      <div class="slide-bar" style="background:${cfg.bar}"></div>
+      <div class="slide-meta">
+        <span class="slide-type-lbl" style="color:${cfg.color}">${cfg.label}</span>
+        <span class="slide-num">${i+1}/${d.slides.length}</span>
+      </div>
+      <div class="slide-title">${s.titulo||""}</div>
+      ${s.subtitulo ? `<div class="slide-stitle">${s.subtitulo}</div>` : ""}
+    </div>`;
+  }).join("");
+
+  const tagsHTML = (d.hashtags||[]).map(h => `<span class="tag">${h}</span>`).join("");
+  const legendaEnc = encodeURIComponent(d.legenda||"");
+  const tagsEnc = encodeURIComponent((d.hashtags||[]).join(" "));
+
+  el.innerHTML = `
+    <div class="result-header">
+      <div>
+        <div class="result-title">${d.titulo||""}</div>
+        <div class="result-sub">${d.subtitulo||""}</div>
+      </div>
+      <div class="result-meta">${(d.slides||[]).length} slides Â· ${d.tom||""}</div>
+    </div>
+    ${d.dica_visual ? `<div class="visual-hint">ð¨ ${d.dica_visual}</div>` : ""}
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('slides',this)">Slides</button>
+      <button class="tab-btn" onclick="switchTab('legenda',this)">Legenda</button>
+      <button class="tab-btn" onclick="switchTab('hashtags',this)">Hashtags</button>
+    </div>
+    <div id="t-slides" class="slides-grid">${slidesHTML}</div>
+    <div id="t-legenda" style="display:none">
+      <div class="text-panel">
+        <div class="panel-header">
+          <span class="panel-lbl">Legenda completa</span>
+          <button class="copy-btn" onclick="doCopy(this,'${legendaEnc}')">Copiar</button>
+        </div>
+        <div class="legenda-text">${(d.legenda||"").replace(/</g,"&lt;")}</div>
+      </div>
+    </div>
+    <div id="t-hashtags" style="display:none">
+      <div class="text-panel">
+        <div class="panel-header">
+          <span class="panel-lbl">${(d.hashtags||[]).length} hashtags</span>
+          <button class="copy-btn" onclick="doCopy(this,'${tagsEnc}')">Copiar todas</button>
+        </div>
+        <div class="tags-wrap">${tagsHTML}</div>
+      </div>
+    </div>
+    <button class="new-btn" onclick="resetApp()">+ Novo carrossel</button>
+  `;
+}
+
+function switchTab(tab, btn) {
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("t-slides").style.display = tab==="slides" ? "grid" : "none";
+  document.getElementById("t-legenda").style.display = tab==="legenda" ? "block" : "none";
+  document.getElementById("t-hashtags").style.display = tab==="hashtags" ? "block" : "none";
+}
+
+function doCopy(btn, encoded) {
+  navigator.clipboard.writeText(decodeURIComponent(encoded));
+  const orig = btn.textContent;
+  btn.textContent = "â Copiado";
+  btn.classList.add("copied");
+  setTimeout(() => { btn.textContent = orig; btn.classList.remove("copied"); }, 2000);
+}
+
+function resetApp() {
+  document.getElementById("result").style.display = "none";
+  document.getElementById("ideas").style.display = "block";
+  document.getElementById("tema").value = "";
+}
+</script>
+</body>
+</html>
